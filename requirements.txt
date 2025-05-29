@@ -1,0 +1,5 @@
+fastapi
+fastapi-mcp
+uvicorn[standard]
+httpx
+redis>=4.2.0

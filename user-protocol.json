@@ -1,0 +1,491 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "User Protocol API",
+    "version": "1.0.0",
+    "description": "API for managing user protocols"
+  },
+  "servers": [
+    {
+      "url": "https://api.dontdie.com",
+      "description": "Production API"
+    },
+    {
+      "url": "https://api-dev.dontdie.com",
+      "description": "Development API"
+    }
+  ],
+  "paths": {
+    "/user-health/{userId}/protocols": {
+      "get": {
+        "summary": "User Protocols",
+        "description": "Gets the protocols for a given user",
+        "security": [
+          {
+            "BearerAuth": [],
+            "ClientIdAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to get the score for",
+            "example": "1234567890",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserProtocol"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create User Protocol",
+        "description": "Creates a new user protocol",
+        "security": [
+          {
+            "BearerAuth": [],
+            "ClientIdAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserProtocol"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProtocol"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-health/{userId}/protocols/{protocolId}": {
+      "get": {
+        "summary": "User Protocol",
+        "description": "Gets the protocol for a given user",
+        "security": [
+          {
+            "BearerAuth": [],
+            "ClientIdAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to get the protocol for",
+            "example": "1234567890",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "protocolId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the protocol to get",
+            "example": "1234567890",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProtocol"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update User Protocol",
+        "description": "Updates a user protocol",
+        "security": [
+          {
+            "BearerAuth": [],
+            "ClientIdAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserProtocol"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProtocol"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete User Protocol",
+        "description": "Deletes a user protocol",
+        "security": [
+          {
+            "BearerAuth": [],
+            "ClientIdAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user-health/{userId}/protocols/{protocolId}/sections": {
+      "get": {
+        "summary": "User Protocol Sections",
+        "description": "Gets the sections for a given user protocol",
+        "security": [
+          {
+            "BearerAuth": [],
+            "ClientIdAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to get the sections for",
+            "example": "1234567890",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "protocolId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the protocol to get the sections for",
+            "example": "1234567890",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserProtocolSection"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create User Protocol Section",
+        "description": "Creates a new user protocol section",
+        "security": [
+          {
+            "BearerAuth": [],
+            "ClientIdAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserProtocolSection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProtocolSection"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserProtocol": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the protocol",
+            "example": "1234567890"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The ID of the user",
+            "example": "1234567890"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Sleep",
+              "Nutrition",
+              "Hydration",
+              "Exercise",
+              "Personal Care",
+              "Social Life",
+              "Mental Health",
+              "Mindfulness",
+              "Recovery",
+              "Environment",
+              "Avoidance",
+              "Other"
+            ],
+            "description": "The category of the protocol",
+            "example": "Sleep"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["Routine", "Product", "Habit", "Guided Protocol", "Other"],
+            "description": "The type of the protocol",
+            "example": "Routine"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the protocol",
+            "example": "Protocol 1"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the protocol",
+            "example": "Protocol 1 description"
+          },
+          "goal": {
+            "type": "string",
+            "description": "The goal of the protocol",
+            "example": "Protocol 1 goal"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Published", "Draft"],
+            "description": "The status of the protocol",
+            "example": "Published"
+          },
+          "startedOn": {
+            "type": "string",
+            "description": "The date the protocol was started",
+            "example": "2021-01-01"
+          },
+          "endedOn": {
+            "type": "string",
+            "description": "The date the protocol was ended",
+            "example": "2021-01-01"
+          }
+        }
+      },
+      "UserProtocolSection": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the protocol section",
+            "example": "1234567890"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the protocol section",
+            "example": "Protocol 1 section"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the protocol section",
+            "example": "Protocol 1 section description"
+          },
+          "reason": {
+            "type": "string",
+            "description": "The reason of the protocol section",
+            "example": "Protocol 1 section reason"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "description": "The sort order of the protocol section",
+            "example": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Published", "Draft"],
+            "description": "The status of the protocol section",
+            "example": "Published"
+          },
+          "startedOn": {
+            "type": "string",
+            "description": "The date the protocol section was started",
+            "example": "2021-01-01"
+          },
+          "endedOn": {
+            "type": "string",
+            "description": "The date the protocol section was ended",
+            "example": "2021-01-01"
+          }
+        }
+      },
+      "CreateUserProtocol": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the protocol",
+            "example": "Protocol 1"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the protocol",
+            "example": "Protocol 1 description"
+          },
+          "goal": {
+            "type": "string",
+            "description": "The goal of the protocol",
+            "example": "Protocol 1 goal"
+          },
+          "category": {
+            "type": "string",
+            "description": "The category of the protocol",
+            "example": "Sleep"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the protocol",
+            "example": "Routine"
+          }
+        }
+      },
+      "UpdateUserProtocol": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the protocol",
+            "example": "Protocol 1"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the protocol",
+            "example": "Protocol 1 description"
+          },
+          "goal": {
+            "type": "string",
+            "description": "The goal of the protocol",
+            "example": "Protocol 1 goal"
+          }
+        }
+      },
+      "CreateUserProtocolSection": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the protocol section",
+            "example": "Protocol 1 section"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the protocol section",
+            "example": "Protocol 1 section description"
+          },
+          "reason": {
+            "type": "string",
+            "description": "The reason of the protocol section",
+            "example": "Protocol 1 section reason"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "description": "The sort order of the protocol section",
+            "example": 1
+          }
+        }
+      },
+      "UpdateUserProtocolSection": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the protocol section",
+            "example": "Protocol 1 section"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the protocol section",
+            "example": "Protocol 1 section description"
+          },
+          "reason": {
+            "type": "string",
+            "description": "The reason of the protocol section",
+            "example": "Protocol 1 section reason"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "ClientIdAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Client-Id",
+        "description": "Your API client ID for the request"
+      }
+    }
+  }
+}

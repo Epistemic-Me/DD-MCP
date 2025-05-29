@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    env_file:
+      - .env
+    environment:
+      REDIS_URL: "redis://redis:6379"
+    ports: [ "8090:8090" ]
+    develop:
+      watch:
+        - action: sync
+          path: ./main.py
+          target: /app/main.py
+        - action: rebuild
+          path: ./requirements.txt
+        - action: sync
+          path: ./app
+          target: /app
+        - action: sync
+          path: ./fastapi_mcp
+          target: /app/fastapi_mcp
+        - action: rebuild
+          path: ./Dockerfile
+        - action: rebuild
+          path: ./docker-compose.yml
+        - action: rebuild
+          path: ./docker-compose.watch.yml
+  redis:
+    image: redis:7
+    ports: [ "6379:6379" ]
